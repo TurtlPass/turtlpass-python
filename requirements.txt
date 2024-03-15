@@ -1,0 +1,3 @@
+argon2-cffi>=21.3.0
+pyserial>=3.5
+tqdm>=4.62.3
