@@ -7,15 +7,15 @@ TurtlPass client application written in Python. It provides a simple command-lin
 
 ## ⚡ Features
 
-* Device Interaction
+* **TurtlPass Device Interaction**
 	* Communicate with TurtlPass-enabled devices connected via USB
-* Generate Passwords
+* **Generate Passwords**
 	* Generate strong passwords securely using TurtlPass
-* Generate OTP Codes
+* **Generate OTP Codes**
 	* Generate one-time passwords (OTP) for two-factor authentication
-* Add OTP Shared Secrets to EEPROM
+* **Add OTP Shared Secrets to EEPROM**
 	* Add OTP shared secrets securely to the TurtlPass device
-* Encrypt and Decrypt Files
+* **Encrypt and Decrypt Files**
 	* Encrypt and decrypt files using TurtlPass for secure storage
 
 
@@ -48,13 +48,55 @@ TurtlPass client application written in Python. It provides a simple command-lin
 
 1. Connect your RP2040-based TurtlPass device to your computer via USB.
 
-2. Run the main.py script:
+2. Run the `turtlpass.py` script:
 
 	```bash
 	python turtlpass.py
 	```
 
 3. Follow the on-screen instructions to interact with the TurtlPass device and perform various actions.
+
+	```
+	                               ___-------___
+	                           _-~~             ~~-_
+	                        _-~                    /~-_
+	     /^\__/^\         /~  \                   /    \
+	   /|  O|| O|        /      \_______________/        \
+	  | |___||__|      /       /                \          \
+	  |          \    /      /                    \          \
+	  |   (_______) /______/                        \_________ \
+	  |         / /         \                      /            \
+	   \         \^\\         \                  /               \     /
+	     \         ||           \______________/      _-_       //\__//
+	       \       ||------_-~~-_ ------------- \ --/~   ~\    || __/
+	         ~-----||====/~     |==================|       |/~~~~~
+	          (_(__/  ./     /                    \_\      \.
+	                 (_(___/                         \_____)_)   [art by jurcy]
+	
+	████████╗██╗░░░██╗██████╗░████████╗██╗░░░░░██████╗░░█████╗░░██████╗░██████╗
+	╚══██╔══╝██║░░░██║██╔══██╗╚══██╔══╝██║░░░░░██╔══██╗██╔══██╗██╔════╝██╔════╝
+	░░░██║░░░██║░░░██║██████╔╝░░░██║░░░██║░░░░░██████╔╝███████║╚█████╗░╚█████╗░
+	░░░██║░░░██║░░░██║██╔══██╗░░░██║░░░██║░░░░░██╔═══╝░██╔══██║░╚═══██╗░╚═══██╗
+	░░░██║░░░╚██████╔╝██║░░██║░░░██║░░░███████╗██║░░░░░██║░░██║██████╔╝██████╔╝
+	░░░╚═╝░░░░╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░╚══════╝╚═╝░░░░░╚═╝░░╚═╝╚═════╝░╚═════╝░
+	Welcome to TurtlPass!
+	Device detected: /dev/cu.usbmodem14101
+	Options:
+	0. Exit
+	1. Get Device Information
+	2. Generate Password
+	3. Generate OTP Code
+	4. Add OTP Shared Secret
+	5. Get Encrypted OTP Secrets
+	6. Encrypt File
+	7. Decrypt File
+	Select an option:
+	```
+
+
+## Sample Files
+
+In the `/files` directory, you'll find several sample files of varying sizes. These files are provided to facilitate testing and demonstrate the encryption and decryption capabilities of TurtlPass. The sample CSV files have been sourced from [here](https://github.com/datablist/sample-csv-files).
 
 
 ## Contributing
