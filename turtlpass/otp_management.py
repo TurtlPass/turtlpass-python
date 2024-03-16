@@ -1,6 +1,6 @@
 import time
 from io import BytesIO
-from turtlpass_rp2040 import TurtlPassRP2040
+from turtlpass.turtlpass_rp2040 import TurtlPassRP2040
 
 def generate_otp_code(turtlpass: TurtlPassRP2040, secure_hash: str) -> None:
     timestamp = int(time.time())

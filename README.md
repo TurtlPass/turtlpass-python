@@ -8,19 +8,19 @@ TurtlPass client application written in Python. It provides a simple command-lin
 ## ⚡ Features
 
 * Device Interaction
-	* Communicate with TurtlPass-enabled devices connected via USB.
+	* Communicate with TurtlPass-enabled devices connected via USB
 * Generate Passwords
-	* Generate strong passwords securely using TurtlPass.
+	* Generate strong passwords securely using TurtlPass
 * Generate OTP Codes
-	* Generate one-time passwords (OTP) for two-factor authentication.
+	* Generate one-time passwords (OTP) for two-factor authentication
 * Add OTP Shared Secrets to EEPROM
-	* Add OTP shared secrets securely to the TurtlPass device.
+	* Add OTP shared secrets securely to the TurtlPass device
 * Encrypt and Decrypt Files
-	* Encrypt and decrypt files using TurtlPass for secure storage.
+	* Encrypt and decrypt files using TurtlPass for secure storage
 
 
 ## Requirements
-* Python 3
+* Python 3+
 * RP2040-based TurtlPass device
 * USB cable
 
@@ -51,7 +51,7 @@ TurtlPass client application written in Python. It provides a simple command-lin
 2. Run the main.py script:
 
 	```bash
-	python main.py
+	python turtlpass.py
 	```
 
 3. Follow the on-screen instructions to interact with the TurtlPass device and perform various actions.

@@ -1,8 +1,8 @@
 import time
 import os
 from io import BytesIO
-from turtlpass_rp2040 import TurtlPassRP2040
-from checksum import calculate_checksum
+from turtlpass.turtlpass_rp2040 import TurtlPassRP2040
+from turtlpass.checksum import calculate_checksum
 
 def process_encryption(turtlpass: TurtlPassRP2040, mode: str, secure_hash: str, src_file: str, dst_file: str) -> None:
     if os.path.isfile(dst_file):
