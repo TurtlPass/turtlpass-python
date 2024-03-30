@@ -7,6 +7,7 @@ from turtlpass.argon2_hash_generator import generate_secure_hash
 from turtlpass.password import generate_password
 from turtlpass.otp_management import add_otp_shared_secret, get_encrypted_otp_secrets, generate_otp_code
 from turtlpass.encryption import process_encryption
+from turtlpass.encryption_image import process_image_encryption
 
 class MenuOption(Enum):
     EXIT = 0
@@ -17,6 +18,8 @@ class MenuOption(Enum):
     GET_ENCRYPTED_OTP = 5
     ENCRYPT_FILE = 6
     DECRYPT_FILE = 7
+    ENCRYPT_IMAGE = 8
+    DECRYPT_IMAGE = 9
 
 def draw_turtle():
     print("                               ___-------___")
@@ -60,6 +63,8 @@ def display_menu():
     print("5. Get Encrypted OTP Secrets")
     print("6. Encrypt File")
     print("7. Decrypt File")
+    print("8. Encrypt Image (experimental)")
+    print("9. Decrypt Image (experimental)")
 
 def select_device(devices):
     if len(devices) == 1:
@@ -128,12 +133,12 @@ def encrypt_file_option(turtlpass: TurtlPassRP2040) -> None:
     draw_line()
     print("6. Encrypt File")
     draw_soft_line()
-    src_file = input("Enter input file name (e.g. 'files/turtle.jpg'): ")
+    src_file = input("Enter input file name (e.g. 'files/customers-100.csv'): ")
     if not os.path.isfile(src_file):
         print("Input file not found.")
         draw_line()
         return
-    dst_file = input("Enter output file name (e.g. 'turtle.jpg.enc'): ")
+    dst_file = input("Enter output file name (e.g. 'customers-100.csv.enc'): ")
     draw_soft_line()
     secure_hash = get_input_and_hash()
     process_encryption(turtlpass, "encrypt", secure_hash, src_file, dst_file)
@@ -144,15 +149,49 @@ def decrypt_file_option(turtlpass: TurtlPassRP2040) -> None:
     draw_line()
     print("7. Decrypt File")
     draw_soft_line()
-    src_file = input("Enter input file name (e.g. 'turtle.jpg.enc'): ")
+    src_file = input("Enter input file name (e.g. 'customers-100.csv.enc'): ")
     if not os.path.isfile(src_file):
         print("Input file not found.")
         draw_line()
         return
-    dst_file = input("Enter output file name (e.g. 'turtle.jpg'): ")
+    dst_file = input("Enter output file name (e.g. 'customers-100.csv'): ")
     draw_soft_line()
     secure_hash = get_input_and_hash()
     process_encryption(turtlpass, "decrypt", secure_hash, src_file, dst_file)
+    del secure_hash, src_file, dst_file
+    draw_line()
+
+# Image (experimental)
+def encrypt_image_option(turtlpass: TurtlPassRP2040) -> None:
+    draw_line()
+    print("8. Encrypt Image (experimental)")
+    draw_soft_line()
+    src_file = input("Enter input file name (e.g. 'files/turtle_x256.bmp'): ")
+    if not os.path.isfile(src_file):
+        print("Input image file not found.")
+        draw_line()
+        return
+    dst_file = input("Enter output file name (e.g. 'encrypted_turtle.bmp'): ")
+    draw_soft_line()
+    secure_hash = get_input_and_hash()
+    process_image_encryption(turtlpass, "encrypt", secure_hash, src_file, dst_file)
+    del secure_hash, src_file, dst_file
+    draw_line()
+
+# Image (experimental)
+def decrypt_image_option(turtlpass: TurtlPassRP2040) -> None:
+    draw_line()
+    print("9. Decrypt Image (experimental)")
+    draw_soft_line()
+    src_file = input("Enter input file name (e.g. 'encrypted_turtle.bmp'): ")
+    if not os.path.isfile(src_file):
+        print("Input image file not found.")
+        draw_line()
+        return
+    dst_file = input("Enter output file name (e.g. 'turtle_x256.bmp'): ")
+    draw_soft_line()
+    secure_hash = get_input_and_hash()
+    process_image_encryption(turtlpass, "decrypt", secure_hash, src_file, dst_file)
     del secure_hash, src_file, dst_file
     draw_line()
 
@@ -179,6 +218,10 @@ def handle_option(option: MenuOption, turtlpass: TurtlPassRP2040) -> None:
         encrypt_file_option(turtlpass)
     elif option == MenuOption.DECRYPT_FILE:
         decrypt_file_option(turtlpass)
+    elif option == MenuOption.ENCRYPT_IMAGE:
+        encrypt_image_option(turtlpass)
+    elif option == MenuOption.DECRYPT_IMAGE:
+        decrypt_image_option(turtlpass)
     else:
         print("Invalid option.")
 
@@ -197,16 +240,16 @@ def main() -> None:
     with TurtlPassRP2040(device_path=device_path) as turtlpass:
         while True:
             display_menu()
-            option = input("Select an option: ")
+            user_input = input("Select an option: ")
             try:
-                option = int(option)
-                if option == MenuOption.EXIT.value:
+                user_input_int = int(user_input)
+                if user_input_int == MenuOption.EXIT.value:
                     print("Exiting...")
                     break
-                elif 1 <= option <= MenuOption.DECRYPT_FILE.value:
-                    handle_option(MenuOption(option), turtlpass)
+                elif 1 <= user_input_int <= MenuOption.DECRYPT_IMAGE.value:
+                    handle_option(MenuOption(user_input_int), turtlpass)
                 else:
-                    print("Invalid option. Please enter a number between 0 and", MenuOption.DECRYPT_FILE.value)
+                    print("Invalid option. Please enter a number between 0 and", MenuOption.DECRYPT_IMAGE.value)
             except ValueError:
                 print("Invalid input. Please enter a number.")
 

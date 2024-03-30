@@ -60,3 +60,9 @@ class TurtlPassRP2040:
                     data_received = turtlpass.device.read(len(chunk))
                     f.write(data_received)
                     pbar.update(len(chunk))
+
+    def send_bytes_get_response(turtlpass: TurtlPassRP2040, rgb_bin: bytes) -> bytes:
+        encrypted_rgb = bytearray()
+        turtlpass.device.write(rgb_bin)
+        encrypted_rgb = turtlpass.device.read(len(rgb_bin))
+        return bytes(encrypted_rgb)
