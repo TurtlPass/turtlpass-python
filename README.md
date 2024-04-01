@@ -90,6 +90,8 @@ TurtlPass client application written in Python. It provides a simple command-lin
 	5. Get Encrypted OTP Secrets
 	6. Encrypt File
 	7. Decrypt File
+	8. Encrypt Image (experimental)
+	9. Decrypt Image (experimental)
 	Select an option:
 	```
 
