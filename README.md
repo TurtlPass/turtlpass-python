@@ -1,111 +1,144 @@
 <p align="center">
-<img src="https://raw.githubusercontent.com/TurtlPass/turtlpass-firmware-arduino/main/assets/icon.png" alt="logo" width=90>
-<h3 align="center">TurtlPass Python</h3>
-<p align="center">
-TurtlPass client application written in Python. It provides a simple command-line interface (CLI) for interacting with TurtlPass-enabled devices connected via USB. This project aims to demonstrate all features present in the TurtlPass Firmware 2.X.X for RP2040 microcontroller-based devices.</p>
+  <img src="https://raw.githubusercontent.com/TurtlPass/turtlpass-firmware-arduino/master/assets/icon.png" alt="Logo" width="133"/>
+</p>
 
+<h2 align="center">🔗 TurtlPass Ecosystem</h2>
+
+<p align="center">
+  🐢 <a href="https://github.com/TurtlPass/turtlpass-firmware-arduino"><b>Firmware</b></a> •
+  💾 <a href="https://github.com/TurtlPass/turtlpass-protobuf"><b>Protobuf</b></a> •
+  💻 <a href="https://github.com/TurtlPass/turtlpass-python"><b>Host</b></a> •
+  🌐 <a href="https://github.com/TurtlPass/turtlpass-chrome-extension"><b>Chrome</b></a> •
+  📱 <a href="https://github.com/TurtlPass/turtlpass-android"><b>Android</b></a>
+</p>
+
+---
+
+# 💻 TurtlPass Host (Python CLI)
+
+[![](https://img.shields.io/github/v/release/TurtlPass/turtlpass-python?color=green&label=Release&logo=python)](https://github.com/TurtlPass/turtlpass-python/releases/latest "GitHub Release")
+[![](https://img.shields.io/badge/Python-v3.8+-green?logo=python)](https://docs.python.org/3.8/ "Python 3.8+")
+[![](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT "License: MIT")
+[![](https://img.shields.io/badge/Documentation-green?label=GitBook&logo=gitbook)](https://ryanamaral.gitbook.io/turtlpass "GitBook Documentation")
+
+A minimal **host-side command-line client** for interacting with **TurtlPass** hardware devices via USB.
+Generate passwords, manage cryptographic seeds, and control your TurtlPass device **securely and locally** — all from the terminal.
+
+---
 
 ## ⚡ Features
 
-* **TurtlPass Device Interaction**
-	* Communicate with TurtlPass-enabled devices connected via USB
-* **Generate Passwords**
-	* Generate strong passwords securely using TurtlPass
-* **Generate OTP Codes**
-	* Generate one-time passwords (OTP) for two-factor authentication
-* **Add OTP Shared Secrets to EEPROM**
-	* Add OTP shared secrets securely to the TurtlPass device
-* **Encrypt and Decrypt Files**
-	* Encrypt and decrypt files using TurtlPass for secure storage
+* 🔌 **Automatic Device Detection** — Instantly detects connected TurtlPass devices
+* 🔐 **Secure Password Generation** — Fully configurable length & charset
+* 🧬 **Seed Management** — Initialize, generate, or restore 512-bit seeds from 24-word BIP-39 mnemonics
+* 💥 **Factory Reset** — Safely reset your device to factory defaults
+* 🔒 **Hardware Security** — All cryptography happens on-device; seeds never leave the TurtlPass
 
+---
 
-## Requirements
-* Python 3+
-* RP2040-based TurtlPass device
-* USB cable
+## ⚙️ Requirements
 
+* Python **3.8+**
+* **TurtlPass device**
+* **USB cable** with data support
 
-## Installation
-1. Clone the repository:
+---
 
-	```bash
-	git clone https://github.com/TurtlPass/turtlpass-python.git
-	```
+## 📦 Installation
 
-2. Navigate to the project directory:
+```bash
+git clone https://github.com/TurtlPass/turtlpass-python.git
+cd turtlpass-python
+pip install -r requirements.txt
+```
 
-	```bash
-	cd turtlpass-python
-	```
+---
 
-3. Install dependencies:
+## 🚀 Usage
 
-	```bash
-	pip install -r requirements.txt
-	```
+1. Plug in your **TurtlPass** device and run:
 
-## Usage
+   ```bash
+   python turtlpass.py
+   ```
 
-1. Connect your RP2040-based TurtlPass device to your computer via USB.
+2. Choose from the interactive menu:
 
-2. Run the `turtlpass.py` script:
+   ```
+   ████████╗██╗░░░██╗██████╗░████████╗██╗░░░░░██████╗░░█████╗░░██████╗░██████╗
+   ╚══██╔══╝██║░░░██║██╔══██╗╚══██╔══╝██║░░░░░██╔══██╗██╔══██╗██╔════╝██╔════╝
+   ░░░██║░░░██║░░░██║██████╔╝░░░██║░░░██║░░░░░██████╔╝███████║╚█████╗░╚█████╗░
+   ░░░██║░░░██║░░░██║██╔══██╗░░░██║░░░██║░░░░░██╔═══╝░██╔══██║░╚═══██╗░╚═══██╗
+   ░░░██║░░░╚██████╔╝██║░░██║░░░██║░░░███████╗██║░░░░░██║░░██║██████╔╝██████╔╝
+   ░░░╚═╝░░░░╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░╚══════╝╚═╝░░░░░╚═╝░░╚═╝╚═════╝░╚═════╝░
+   Welcome to TurtlPass!
+   Device detected: /dev/cu.usbmodem14101
+   Options:
+   0. <Exit>
+   1. Get TurtlDevice Information
+   2. Generate Password on TurtlDevice
+   3. Initialize TurtlDevice with 512-bit Seed
+   4. Generate 24-word Mnemonic and Derive 512-bit Seed
+   5. Restore 512-bit Seed from a 24-word Mnemonic
+   6. Factory Reset TurtlDevice (⚠️ DANGEROUS)
+   Select an option: 
+   ```
 
-	```bash
-	python turtlpass.py
-	```
+---
 
-3. Follow the on-screen instructions to interact with the TurtlPass device and perform various actions.
+## 📖 Usage Example: Generate a Password
 
-	```
-	                               ___-------___
-	                           _-~~             ~~-_
-	                        _-~                    /~-_
-	     /^\__/^\         /~  \                   /    \
-	   /|  O|| O|        /      \_______________/        \
-	  | |___||__|      /       /                \          \
-	  |          \    /      /                    \          \
-	  |   (_______) /______/                        \_________ \
-	  |         / /         \                      /            \
-	   \         \^\\         \                  /               \     /
-	     \         ||           \______________/      _-_       //\__//
-	       \       ||------_-~~-_ ------------- \ --/~   ~\    || __/
-	         ~-----||====/~     |==================|       |/~~~~~
-	          (_(__/  ./     /                    \_\      \.
-	                 (_(___/                         \_____)_)   [art by jurcy]
-	
-	████████╗██╗░░░██╗██████╗░████████╗██╗░░░░░██████╗░░█████╗░░██████╗░██████╗
-	╚══██╔══╝██║░░░██║██╔══██╗╚══██╔══╝██║░░░░░██╔══██╗██╔══██╗██╔════╝██╔════╝
-	░░░██║░░░██║░░░██║██████╔╝░░░██║░░░██║░░░░░██████╔╝███████║╚█████╗░╚█████╗░
-	░░░██║░░░██║░░░██║██╔══██╗░░░██║░░░██║░░░░░██╔═══╝░██╔══██║░╚═══██╗░╚═══██╗
-	░░░██║░░░╚██████╔╝██║░░██║░░░██║░░░███████╗██║░░░░░██║░░██║██████╔╝██████╔╝
-	░░░╚═╝░░░░╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░╚══════╝╚═╝░░░░░╚═╝░░╚═╝╚═════╝░╚═════╝░
-	Welcome to TurtlPass!
-	Device detected: /dev/cu.usbmodem14101
-	Options:
-	0. Exit
-	1. Get Device Information
-	2. Generate Password
-	3. Generate OTP Code
-	4. Add OTP Shared Secret
-	5. Get Encrypted OTP Secrets
-	6. Encrypt File
-	7. Decrypt File
-	8. Encrypt Image (experimental)
-	9. Decrypt Image (experimental)
-	Select an option:
-	```
+```
+2. Generate Password on TurtlDevice
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+Enter desired password length (1-128) [press ENTER to use 100]: 128
+Select character set:
+1. Numbers (0–9)
+2. Letters (a–z, A–Z)
+3. Letters + Numbers (a–z, A–Z, 0–9)  [default]
+4. Letters + Numbers + Symbols (a–z, A–Z, 0–9, symbols)
+Choose charset [press ENTER to use default]: 4
 
+Enter Domain Name (e.g. 'google'): github
+Enter Account ID (e.g. 'user@example.com'): turtlpass@ryanamaral.com
+Enter PIN (e.g. '704713'): ******
 
-## Sample Files
+✅ Password successfully generated
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+```
 
-In the `/files` directory, you'll find several sample files of varying sizes. These files are provided to facilitate testing and demonstrate the encryption and decryption capabilities of TurtlPass. The sample CSV files have been sourced from [here](https://github.com/datablist/sample-csv-files).
+All passwords are generated **on-device**, ensuring maximum security.
 
+---
 
-## Contributing
+## 💻 Supported Platforms
 
-Contributions are welcome! If you find any bugs or have suggestions for new features, please open an issue or submit a pull request.
+| OS      | Status      |
+| ------- | ----------- |
+| Linux   | ✅ Supported |
+| macOS   | ✅ Supported |
+| Windows | ✅ Supported |
 
+---
 
-## 📄 License
+## 🧰 Troubleshooting
 
-TurtlPass Python is released under the [MIT License](https://github.com/TurtlPass/turtlpass-python/blob/master/LICENSE).
+* **Device not detected:** Ensure USB cable supports data transfer and device is plugged in
+* **Linux users:** You may need to add a `udev` rule for USB access
+* **macOS users:** Check `/dev/cu.*` to find the connected device
+* **Windows users:** Verify COM port and drivers
+
+---
+
+## 📚 Dependencies
+
+* [argon2-cffi](https://pypi.org/project/argon2-cffi/) — Secure Argon2 key derivation and password hashing
+* [pyserial](https://pypi.org/project/pyserial/) — USB communication with the TurtlPass device
+* [protobuf](https://pypi.org/project/protobuf/) — Protocol Buffers serialization for device messages
+* [mnemonic](https://pypi.org/project/mnemonic/) — BIP-39 mnemonic generation and seed handling
+
+---
+
+## 📜 License
+
+This repository is licensed under the [MIT License](./LICENSE).

@@ -1,3 +1,4 @@
-argon2-cffi>=21.3.0
+argon2-cffi>=25.1.0
 pyserial>=3.5
-tqdm>=4.62.3
+protobuf>=6.33.0
+mnemonic>=0.21

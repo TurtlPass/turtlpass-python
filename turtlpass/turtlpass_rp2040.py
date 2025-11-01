@@ -5,6 +5,8 @@ import serial
 from io import BytesIO
 from types import TracebackType
 from tqdm import tqdm
+from proto import turtlpass_pb2
+
 
 class TurtlPassRP2040:
     BUFFER_SIZE = 8192
@@ -33,36 +35,23 @@ class TurtlPassRP2040:
             raise FileNotFoundError("USB device not found: ", self.device_path)
         self.device = serial.Serial(self.device_path, TurtlPassRP2040.BAUD_RATE)
 
-    def send_command(self, command: str):
-        self.device.write(str.encode(command) + b"\n")
-        return self.device.readline().strip() # strip \r\n
+    def send_proto_command(self, cmd: turtlpass_pb2.Command) -> None:
+        # ensures the device isn’t still holding text from a previous run
+        self.device.reset_input_buffer()
+        self.device.reset_output_buffer()
 
-    def send_command_read_until_end(self, command: str) -> None:
-        self.device.write(str.encode(command) + b"\n")
-        read = False
-        while True:
-            if self.device.in_waiting:
-                raw = self.device.readline().strip()
-                if not raw:
-                    return
-                print(raw.decode())
-                read = True
-            else:
-                if read:
-                    return
+        """Send a protobuf message (with length prefix)"""
+        data = cmd.SerializeToString()
+        size = len(data).to_bytes(2, "little") # 2-byte length prefix
+        self.device.write(size + data)
 
-    def send_bytes_write_file(turtlpass: TurtlPassRP2040, src_bytes: BytesIO, dst_file: str) -> None:
-        total_size = src_bytes.getbuffer().nbytes
-        with open(dst_file, "wb") as f:
-            with tqdm(total=total_size, unit='B', unit_scale=True, desc='TX/RX', leave=False) as pbar:
-                for chunk in iter(lambda: src_bytes.read(turtlpass.BUFFER_SIZE), b''):
-                    turtlpass.device.write(chunk)
-                    data_received = turtlpass.device.read(len(chunk))
-                    f.write(data_received)
-                    pbar.update(len(chunk))
-
-    def send_bytes_get_response(turtlpass: TurtlPassRP2040, rgb_bin: bytes) -> bytes:
-        encrypted_rgb = bytearray()
-        turtlpass.device.write(rgb_bin)
-        encrypted_rgb = turtlpass.device.read(len(rgb_bin))
-        return bytes(encrypted_rgb)
+    def receive_proto_response(self) -> turtlpass_pb2.Response:
+        """Receive a protobuf message (with length prefix)"""
+        size_bytes = self.device.read(2)
+        if len(size_bytes) < 2:
+            raise IOError("Failed to read response length")
+        size = int.from_bytes(size_bytes, "little")
+        resp_data = self.device.read(size)
+        resp = turtlpass_pb2.Response()
+        resp.ParseFromString(resp_data)
+        return resp
