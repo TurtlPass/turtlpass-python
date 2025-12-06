@@ -17,7 +17,7 @@
 # 💻 TurtlPass Host (Python CLI)
 
 [![](https://img.shields.io/github/v/release/TurtlPass/turtlpass-python?color=green&label=Release&logo=python)](https://github.com/TurtlPass/turtlpass-python/releases/latest "GitHub Release")
-[![](https://img.shields.io/badge/Python-v3.8+-green?logo=python)](https://docs.python.org/3.8/ "Python 3.8+")
+[![](https://img.shields.io/badge/Python-v3.10+-green?logo=python)](https://docs.python.org/3.10/ "Python 3.10+")
 [![](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT "License: MIT")
 [![](https://img.shields.io/badge/Documentation-green?label=GitBook&logo=gitbook)](https://ryanamaral.gitbook.io/turtlpass "GitBook Documentation")
 
@@ -38,7 +38,7 @@ Generate passwords, manage cryptographic seeds, and control your TurtlPass devic
 
 ## ⚙️ Requirements
 
-* Python **3.8+**
+* Python **3.10+**
 * **TurtlPass device**
 * **USB cable** with data support
 
@@ -49,7 +49,7 @@ Generate passwords, manage cryptographic seeds, and control your TurtlPass devic
 ```bash
 git clone https://github.com/TurtlPass/turtlpass-python.git
 cd turtlpass-python
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 ---

@@ -1,3 +1,10 @@
+import sys
+import os
+# -------------------------------------------------------------------------------------
+# Ensure the Python interpreter can find the local 'turtlpass' and 'proto' directories
+script_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(script_dir)
+# -------------------------------------------------------------------------------------
 from enum import Enum
 from turtlpass.list_devices import list_usb_devices
 from turtlpass.turtlpass_rp2040 import TurtlPassRP2040
@@ -127,7 +134,7 @@ def generate_password_option(turtlpass: TurtlPassRP2040) -> None:
     # Ask user for inputs
     length, charset = get_password_generation_params()
     secure_hash = get_input_and_hash()
-
+    
     # Build protobuf command
     cmd = turtlpass_pb2.Command(
         type=turtlpass_pb2.CommandType.GENERATE_PASSWORD,
@@ -443,7 +450,15 @@ def main() -> None:
 
     usb_devices = list_usb_devices()
     if not usb_devices:
-        print("No USB devices detected.")
+        os_name = sys.platform
+        if os_name.startswith("darwin"):
+            print("No USB devices detected on macOS (/dev/cu.*)")
+        elif os_name.startswith("linux"):
+            print("No USB devices detected on Linux (/dev/ttyUSB* or /dev/ttyACM*)")
+        elif os_name.startswith("win"):
+            print("No USB devices detected on Windows (COM ports)")
+        else:
+            print("No USB devices detected on this OS")
         print("Exiting...")
         return
 

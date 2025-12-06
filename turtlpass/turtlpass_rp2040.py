@@ -1,10 +1,10 @@
 from __future__ import annotations
+import sys
 import os
 from typing import Any
 import serial
 from io import BytesIO
 from types import TracebackType
-from tqdm import tqdm
 from proto import turtlpass_pb2
 
 
@@ -31,8 +31,10 @@ class TurtlPassRP2040:
         self.device.close()
 
     def initialize_device(self) -> None:
-        if not os.path.exists(self.device_path):
-            raise FileNotFoundError("USB device not found: ", self.device_path)
+        if not (sys.platform.startswith("win") or os.path.exists(self.device_path)):
+            if not sys.platform.startswith("win"):
+                # Only raise error if path does not exist on macOS/Linux
+                raise FileNotFoundError("USB device not found: ", self.device_path)
         self.device = serial.Serial(self.device_path, TurtlPassRP2040.BAUD_RATE)
 
     def send_proto_command(self, cmd: turtlpass_pb2.Command) -> None:
